@@ -10,6 +10,9 @@ from pytube import Playlist
 from moviepy.editor import *
 import eyed3
 import os
+import time
+
+start = time.time()
 
 playlist = Playlist("https://www.youtube.com/watch?v=_NdHySPJr8I&list=OLAK5uy_nfj-ClCRuKN6o4qzzJFbpdeLG1XwIPfb0")
 urls = playlist.video_urls
@@ -35,7 +38,7 @@ for x in urls:
     print(newFile)
     os.rename(File, newFile)
     """
-    
+
     newFile, ext = os.path.splitext(File)
 
     # Convert File
@@ -55,3 +58,5 @@ for x in urls:
 
 print("Finished downloading Playlist")
 
+end = time.time()
+print("Download took: " + str(end - start) + "Seconds")
