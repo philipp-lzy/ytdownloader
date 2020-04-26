@@ -59,4 +59,4 @@ for x in urls:
 print("Finished downloading Playlist")
 
 end = time.time()
-print("Download took: " + str(end - start) + "Seconds")
+print("Download took: " + str(end - start) + " Seconds")
