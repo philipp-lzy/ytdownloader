@@ -1,0 +1,184 @@
+"""
+TestResults: Downlaod 14 Songs
+Time: ~85s
+Errors: Sometimes the title becomes "YouTube" instead of real title (1 Song on every Try...)
+
+Update: added time.sleep(0.01) after calling YouTube() and after defining title
+>> Error got down to = out of 5 tries
+"""
+
+
+from pytube import YouTube
+from pytube import Playlist
+from moviepy.editor import AudioFileClip
+import time
+import multiprocessing
+import os
+import eyed3
+
+start = time.time()
+
+playlist = Playlist("https://www.youtube.com/playlist?list=PLSdoVPM5WnndLX6Ngmb8wktMF61dJirKl")
+urls = playlist.video_urls
+
+# Split Urls to 4 Lists same size
+urls_part_1 = urls[:len(urls) // 2]
+urls_part_2 = urls[len(urls) // 2:]
+
+split1 = urls_part_1[:len(urls_part_1) // 2]
+split2 = urls_part_1[len(urls_part_1) // 2:]
+split3 = urls_part_2[:len(urls_part_2) // 2]
+split4 = urls_part_2[len(urls_part_2) // 2:]
+
+
+# Defining Functions
+def downloadSplit1():
+    for a in split1:
+        # Get Video
+        video = YouTube(a)
+        time.sleep(0.01)                            #Sleep reduces Error Chance drasticly
+
+        # Get Title from Video
+        title = video.title
+        time.sleep(0.01)
+
+
+        # Select Stream
+        stream = video.streams.order_by("bitrate").filter(only_audio=True, file_extension="mp4").last()
+
+        # Store File in Variable
+        File = stream.download("C:\Temp")
+        newFile, ext = os.path.splitext(File)
+
+        # Convert File
+        audio = AudioFileClip(os.path.abspath(File))
+        audio.write_audiofile(newFile + ".mp3")
+        audio.close()
+        os.remove(os.path.abspath(File))
+
+        # Get Metadata
+        finalFile = eyed3.load(os.path.abspath(newFile + ".mp3"))
+        finalFile.tag.artist = "Daft Punk"
+        finalFile.tag.album = "Discovery"
+        finalFile.tag.title = title
+        finalFile.tag.save()
+
+        print("Finished Download and Converting of: " + title)
+
+
+def downloadSplit2():
+    for b in split2:
+        # Get Video
+        video = YouTube(b)
+        time.sleep(0.01)
+
+        # Get Title from Video
+        title = video.title
+        time.sleep(0.01)
+
+        # Select Stream
+        stream = video.streams.order_by("bitrate").filter(only_audio=True, file_extension="mp4").last()
+
+        # Store File in Variable
+        File = stream.download("C:\Temp")
+        newFile, ext = os.path.splitext(File)
+
+        # Convert File
+        audio = AudioFileClip(os.path.abspath(File))
+        audio.write_audiofile(newFile + ".mp3")
+        audio.close()
+        os.remove(os.path.abspath(File))
+
+        # Get Metadata
+        finalFile = eyed3.load(os.path.abspath(newFile + ".mp3"))
+        finalFile.tag.artist = "Daft Punk"
+        finalFile.tag.album = "Discovery"
+        finalFile.tag.title = title
+        finalFile.tag.save()
+
+        print("Finished Download and Converting of: " + title)
+
+
+def downloadSplit3():
+    for c in split3:
+        # Get Video
+        video = YouTube(c)
+        time.sleep(0.01)
+
+        # Get Title from Video
+        title = video.title
+        time.sleep(0.01)
+
+        # Select Stream
+        stream = video.streams.order_by("bitrate").filter(only_audio=True, file_extension="mp4").last()
+
+        # Store File in Variable
+        File = stream.download("C:\Temp")
+        newFile, ext = os.path.splitext(File)
+
+        # Convert File
+        audio = AudioFileClip(os.path.abspath(File))
+        audio.write_audiofile(newFile + ".mp3")
+        audio.close()
+        os.remove(os.path.abspath(File))
+
+        # Get Metadata
+        finalFile = eyed3.load(os.path.abspath(newFile + ".mp3"))
+        finalFile.tag.artist = "Daft Punk"
+        finalFile.tag.album = "Discovery"
+        finalFile.tag.title = title
+        finalFile.tag.save()
+
+        print("Finished Download and Converting of: " + title)
+
+
+def downloadSplit4():
+    for d in split4:
+        # Get Video
+        video = YouTube(d)
+        time.sleep(0.01)
+
+        # Get Title from Video
+        title = video.title
+        time.sleep(0.01)
+
+        # Select Stream
+        stream = video.streams.order_by("bitrate").filter(only_audio=True, file_extension="mp4").last()
+
+        # Store File in Variable
+        File = stream.download("C:\Temp")
+        newFile, ext = os.path.splitext(File)
+
+        # Convert File
+        audio = AudioFileClip(os.path.abspath(File))
+        audio.write_audiofile(newFile + ".mp3")
+        audio.close()
+        os.remove(os.path.abspath(File))
+
+        # Get Metadata
+        finalFile = eyed3.load(os.path.abspath(newFile + ".mp3"))
+        finalFile.tag.artist = "Daft Punk"
+        finalFile.tag.album = "Discovery"
+        finalFile.tag.title = title
+        finalFile.tag.save()
+
+        print("Finished Download and Converting of: " + title)
+
+if __name__ == '__main__':
+    p1 = multiprocessing.Process(name="p1", target=downloadSplit1)
+    p2 = multiprocessing.Process(name="p2", target=downloadSplit2)
+    p3 = multiprocessing.Process(name="p3", target=downloadSplit3)
+    p4 = multiprocessing.Process(name="p4", target=downloadSplit4)
+
+    p1.start()
+    p2.start()
+    p3.start()
+    p4.start()
+
+    p1.join()
+    p2.join()
+    p3.join()
+    p4.join()
+
+end = time.time()
+print("Download took: " + str(end - start) + " Seconds")
