@@ -36,11 +36,11 @@ def downloadSplit1():
     for a in split1:
         # Get Video
         video = YouTube(a)
-        time.sleep(0.01)                            #Sleep reduces Error Chance drasticly
+        time.sleep(0.05)                            #Sleep reduces Error Chance drasticly
 
         # Get Title from Video
         title = video.title
-        time.sleep(0.01)
+        time.sleep(0.05)
 
 
         # Select Stream
@@ -70,11 +70,11 @@ def downloadSplit2():
     for b in split2:
         # Get Video
         video = YouTube(b)
-        time.sleep(0.01)
+        time.sleep(0.05)
 
         # Get Title from Video
         title = video.title
-        time.sleep(0.01)
+        time.sleep(0.05)
 
         # Select Stream
         stream = video.streams.order_by("bitrate").filter(only_audio=True, file_extension="mp4").last()
@@ -103,11 +103,11 @@ def downloadSplit3():
     for c in split3:
         # Get Video
         video = YouTube(c)
-        time.sleep(0.01)
+        time.sleep(0.05)
 
         # Get Title from Video
         title = video.title
-        time.sleep(0.01)
+        time.sleep(0.05)
 
         # Select Stream
         stream = video.streams.order_by("bitrate").filter(only_audio=True, file_extension="mp4").last()
@@ -136,11 +136,11 @@ def downloadSplit4():
     for d in split4:
         # Get Video
         video = YouTube(d)
-        time.sleep(0.01)
+        time.sleep(0.05)
 
         # Get Title from Video
         title = video.title
-        time.sleep(0.01)
+        time.sleep(0.05)
 
         # Select Stream
         stream = video.streams.order_by("bitrate").filter(only_audio=True, file_extension="mp4").last()
